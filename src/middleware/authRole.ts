@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express"
 
-export const authToken = (...role:string[]) => {
+export const authRole = (...role:string[]) => {
     return (req: Request, _res: Response, next:NextFunction) => {
         const user = req.user
         if(!user){

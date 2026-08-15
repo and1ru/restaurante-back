@@ -9,9 +9,9 @@ export class LoginController {
         if(!data.success){
             return next(data.error)
         }
-
         try {
-            
+            const { email, password } = data.data
+            const response = this.service.login(email, password)
         } catch (error) {
             console.error(error)
             return next(error)

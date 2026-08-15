@@ -1,3 +1,3 @@
-export const loginRepository = () => {
+export const loginRepository = (email:string) => {
     
 }
