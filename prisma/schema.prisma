@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Role{
+  ROOT
+  ADMIN
+  OWNER
+  CASHIER
+  CHEFF
+}
+
+enum OderStatus{
+  PENDDING
+  DONE
+}
+
+model Restaurants{
+  restaurant_id Int @id @default(autoincrement())
+  restaurant_name String
+}
+
+model Users{
+  user_id Int @id @default(autoincrement())
+  role Role
+  email String
+  password String
+  company_id Int
+}
+
+model Branches{
+  branch_id Int @id @default(autoincrement())
+  branch_name String
+  branch_address String
+  branch_city String
+  restaurant_id Int
+}
+
+model Categories{
+  category_id Int @id @default(autoincrement())
+  category_name String
+  restaurant_id Int
+}
+
+model Dishes{
+  dish_id Int @id @default(autoincrement())
+  dish_name String
+  dish_img_url String
+  dish_img_id String
+  category_id Int
+  restaurant_id Int
+}
+
+model Branch_dishes{
+  branch_dish_id Int @id @default(autoincrement())
+  dish_id Int
+  dish_price Decimal
+}
+
+model Orders{
+  order_id Int @id @default(autoincrement())
+  total Decimal
+  status OderStatus
+  order_date DateTime
+}
+
+model Order_dish{
+  order_dish_id Int @id @default(autoincrement())
+  branch_dish_id Int
+  order_id Int
+  quantity Int
+  subtotal Decimal
+}
