@@ -7,6 +7,6 @@ const controller = new LoginController(service)
 
 const route = Router()
 
-route.post("", controller.login)
+route.post("/login", controller.login)
 
 export default route

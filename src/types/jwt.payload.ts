@@ -1,4 +1,6 @@
 export interface Payload {
-    id: number;
-    rol: string;
+    userId: number;
+    role: string;
+    restaurantId:number
+    name:string
 }

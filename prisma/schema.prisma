@@ -21,58 +21,87 @@ enum OderStatus{
 }
 
 model Restaurants{
-  restaurant_id Int @id @default(autoincrement())
-  restaurant_name String
+  id Int @id @default(autoincrement())
+  name String
+
+  users Users[]
+  branches Branches[]
+  categories Categories[]
+  dishes Dishes[]
 }
 
 model Users{
-  user_id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+  name String
   role Role
-  email String
+  email String @unique
   password String
-  company_id Int
+  restaurant_id Int
+
+  Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
 }
 
 model Branches{
-  branch_id Int @id @default(autoincrement())
-  branch_name String
-  branch_address String
-  branch_city String
+  id Int @id @default(autoincrement())
+  name String
+  address String
+  city String
   restaurant_id Int
+
+  Orders Orders[]
+  branch_dishes Branch_dishes[]
+  Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
 }
 
 model Categories{
-  category_id Int @id @default(autoincrement())
-  category_name String
+  id Int @id @default(autoincrement())
+  name String
+
   restaurant_id Int
+
+  Dishes Dishes[]
+
+  Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
 }
 
 model Dishes{
-  dish_id Int @id @default(autoincrement())
-  dish_name String
-  dish_img_url String
-  dish_img_id String
+  id Int @id @default(autoincrement())
+  name String
+  image_url String
+  image_id String
   category_id Int
   restaurant_id Int
+
+  Category Categories @relation(fields: [category_id], references: [id])
+  Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
 }
 
 model Branch_dishes{
-  branch_dish_id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+  branch_id Int
   dish_id Int
-  dish_price Decimal
+  price Decimal
+
+  Branch Branches @relation(fields: [branch_id], references: [id])
 }
 
 model Orders{
-  order_id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   total Decimal
   status OderStatus
-  order_date DateTime
+  date DateTime
+  branch_id Int
+
+  Branch Branches @relation(fields: [branch_id], references: [id])
+  Order_dish Order_dish[]
 }
 
 model Order_dish{
-  order_dish_id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   branch_dish_id Int
   order_id Int
   quantity Int
   subtotal Decimal
+
+  Order Orders @relation(fields: [order_id], references: [id])
 }

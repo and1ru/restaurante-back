@@ -5,9 +5,9 @@ import type { Payload } from '../types/jwt.payload'
 export const authToken = (req:Request, res:Response, next:NextFunction) => {
     const token = req.cookies.token
     if(!token){
-        // poner el middleware de error
-        return
+        return res.status(400).json({message:"no token", success:false})
     }
+    
     try {
         const verify = jwt.verify(token, "palabra_secreta") as Payload
 
