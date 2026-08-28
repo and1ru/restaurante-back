@@ -1,6 +1,7 @@
 import z from 'zod'
 
 export const createBranchSchema = z.object({
+    name: z.string().min(1,""),
     country: z.string().min(1, "el campo es requerido"),
     city: z.string().min(1, "el campo es requerido"),
     address: z.string().min(1, "el campo es requerido"),

@@ -46,6 +46,8 @@ model Branches{
   name String
   address String
   city String
+  country String
+  tables Int
   restaurant_id Int
 
   Orders Orders[]
