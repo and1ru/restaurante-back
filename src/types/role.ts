@@ -1,0 +1,1 @@
+export type role =  "ADMIN" | "CASHIER" | "CHEF" | "RECEPTIONIST" | "WAITRESS"

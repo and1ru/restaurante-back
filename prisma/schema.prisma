@@ -12,7 +12,9 @@ enum Role{
   ADMIN
   OWNER
   CASHIER
-  CHEFF
+  CHEF
+  RECEPTIONIST
+  WAITRESS
 }
 
 enum OderStatus{
@@ -38,6 +40,8 @@ model Users{
   password String
   restaurant_id Int
 
+  // tiene un ? porque puede haber un usuario que todavia no es employee
+  Employee Employees?
   Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
 }
 
@@ -52,7 +56,19 @@ model Branches{
 
   Orders Orders[]
   branch_dishes Branch_dishes[]
+  Employees Employees[]
+
   Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
+}
+
+model Employees {
+  id Int @id @default(autoincrement())
+  // unique hace que la relacion sea 1 a 1
+  userId Int @unique
+  branchId Int
+
+  User Users @relation(fields: [userId], references: [id])
+  Branch Branches @relation(fields: [branchId], references: [id])
 }
 
 model Categories{
