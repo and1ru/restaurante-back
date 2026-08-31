@@ -8,6 +8,7 @@ import branches from './moduls/get_branches/get_branches.route'
 import categories from './moduls/get_categories/get_categories.route'
 import createCategory from './moduls/create_category/create_category.route'
 import hire from './moduls/hire/hire.route'
+import employees from './moduls/Employee/Employee.route'
 
 const route = Router()
 
@@ -20,5 +21,6 @@ route.use(branches)
 route.use(categories)
 route.use(createCategory)
 route.use(hire)
+route.use(employees)
 
 export default route
