@@ -6,7 +6,7 @@ interface User{
     role?:role
 }
 
-export const employeeFilter = async (branchId?:number, role?:roleFilter) => {
+export const employeeFilter = async (branchId:number, role:roleFilter, name:string) => {
     return await prisma.employees.findMany({
         where:{
             // branchId,
@@ -16,6 +16,9 @@ export const employeeFilter = async (branchId?:number, role?:roleFilter) => {
             }),
             ...(role !== "" && {
                 User:{role}
+            }),
+            ...(name !== "" && {
+                User:{name}
             })
         },
 

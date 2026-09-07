@@ -18,6 +18,7 @@ export class CreateCategoryController {
         try {
             const { name } = data.data
             await this.service.createCategory(name, restaurantId)
+            return res.status(201).json({message:"category created", success:true})
         } catch (error) {
             return next(error)
         }

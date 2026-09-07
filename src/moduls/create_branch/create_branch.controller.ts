@@ -17,7 +17,7 @@ export class CreateBranchController {
 
         try {
             const { address, city, country, table, name } = data.data
-            await this.service.createBranch(name, address, city, country, table, restaurantId)
+            await this.service.createBranch(name, address, city, country, Number(table), restaurantId)
             return res.status(201).json({message:"branch created", success:true})
         } catch (error) {
             console.error(error)
