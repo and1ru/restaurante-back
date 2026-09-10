@@ -90,6 +90,8 @@ model Dishes{
   category_id Int
   restaurant_id Int
 
+  Branch_Dishes Branch_dishes[]
+
   Category Categories @relation(fields: [category_id], references: [id])
   Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
 }
@@ -100,6 +102,7 @@ model Branch_dishes{
   dish_id Int
   price Decimal
 
+  Dish Dishes @relation(fields: [dish_id], references: [id])
   Branch Branches @relation(fields: [branch_id], references: [id])
 }
 

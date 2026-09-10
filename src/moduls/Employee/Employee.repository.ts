@@ -1,11 +1,6 @@
 import { prisma } from "../../../lib/prisma"
 import type { role, roleFilter } from "../../types/role"
 
-interface User{
-    branchId?:number, 
-    role?:role
-}
-
 export const employeeFilter = async (branchId:number, role:roleFilter, name:string) => {
     return await prisma.employees.findMany({
         where:{
@@ -31,4 +26,8 @@ export const employeeFilter = async (branchId:number, role:roleFilter, name:stri
             }
         }
     })
+}
+
+export const findBranch = async (userId:number) => {
+    return await prisma.employees.findUnique({where:{userId}, select:{branchId:true}})
 }

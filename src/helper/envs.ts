@@ -6,4 +6,7 @@ export const envs = {
     db_user: process.env.DATABASE_USER!,
     db_password: process.env.DATABASE_PASSWORD!,
     db_database: process.env.DATABASE_NAME!,
+    cl_cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+    cl_api_key: process.env.CLOUDINARY_API_KEY!,
+    cl_api_secret: process.env.CLOUDINARY_API_SECRET!
 }

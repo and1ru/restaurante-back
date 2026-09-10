@@ -14,10 +14,6 @@ export class EmployeeController {
             return res.status(401)
         }
 
-        console.log(branch)
-        console.log(name)
-        console.log(role)
-
         if(typeof name !== "string" || typeof branch !== "string"){
             return res.status(400).json({message:"credential error", success:false})
         }
