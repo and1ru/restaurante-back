@@ -10,9 +10,12 @@ import createCategory from './moduls/create_category/create_category.route'
 import hire from './moduls/hire/hire.route'
 import employees from './moduls/Employee/Employee.route'
 import createDish from './moduls/create_dish/create_dish.route'
-import dishes from './moduls/get_dishes/get_dishes.route'
 import createBranchDish from './moduls/create_branch_dish/create_branch_dish.route'
 import updateBranchDish from './moduls/update_branch_dish/update_branch_dish.route'
+import dishesOwner from './moduls/dishes_owner/dishes_owner.route'
+import dishesAdmin from './moduls/dishes_admin/dishes_admin.route'
+import dishesWaitress from './moduls/dishes_waitress/dishes_waitress.route'
+import createOrder from './moduls/send_order/send_order.route'
 
 const route = Router()
 
@@ -27,8 +30,11 @@ route.use(createCategory)
 route.use(hire)
 route.use(employees)
 route.use(createDish)
-route.use(dishes)
 route.use(createBranchDish)
 route.use(updateBranchDish)
+route.use(dishesOwner)
+route.use(dishesAdmin)
+route.use(dishesWaitress)
+route.use(createOrder)
 
 export default route

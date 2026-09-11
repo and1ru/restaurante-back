@@ -110,7 +110,7 @@ model Orders{
   id Int @id @default(autoincrement())
   total Decimal
   status OderStatus
-  date DateTime
+  date DateTime @default(now())
   branch_id Int
 
   Branch Branches @relation(fields: [branch_id], references: [id])
@@ -119,10 +119,11 @@ model Orders{
 
 model Order_dish{
   id Int @id @default(autoincrement())
-  branch_dish_id Int
+  branch_dish_id Int // id del dish de una branch especifica
   order_id Int
   quantity Int
   subtotal Decimal
-
+  user_id Int
+  
   Order Orders @relation(fields: [order_id], references: [id])
 }
