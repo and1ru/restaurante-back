@@ -1,5 +1,5 @@
 import { CustomError } from "../../helper/cutomError";
-import { findBranchDish, findBranch, createOrder, createDishOrder } from "./send_order.repository";
+import { findBranchDish, findBranch, createOrder, createDishOrder, finalOrderRepository } from "./send_order.repository";
 import type { dishType } from "./send_order.schema";
 
 export class SendOrderService {
@@ -18,11 +18,14 @@ export class SendOrderService {
             if(!branchDish){
                 throw new CustomError(400, "no se pudo encontrar el dish")
             }
+
             const subTotal = Number(branchDish.price) * dish.quantity
+
             branchDishes.push({
                 branchId: branchDish.id,
                 subTotal,
-                quantity: dish.quantity
+                quantity: dish.quantity,
+                name: dish.name
             })
         }
 
@@ -36,8 +39,14 @@ export class SendOrderService {
         const order = await createOrder(total, branch.branchId)
         // insertar en esa order cada dish y quantity
         for (const dish of branchDishes) {
-            await createDishOrder(dish.quantity, dish.subTotal, userId, order.id, branch.branchId)
+            await createDishOrder(dish.quantity, dish.subTotal, userId, order.id, branch.branchId, dish.name)
         }
-        return
+
+        const finalOrder = await finalOrderRepository(order.id)
+        if(!finalOrder){
+            throw new CustomError(400, "error")
+        }
+
+        return finalOrder
     }
 }

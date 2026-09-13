@@ -22,8 +22,8 @@ export class CreateDishController {
         }
 
         try {
-            const { category, description, name } = data.data
-            await this.service.createDish(image, Number(category), description, name, restaurantId)
+            const { category, name } = data.data
+            await this.service.createDish(image, Number(category), name, restaurantId)
             return res.status(201).json({message:"dish has been created", success:true})
         } catch (error) {
             return next(error)

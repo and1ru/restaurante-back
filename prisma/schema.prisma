@@ -101,9 +101,12 @@ model Branch_dishes{
   branch_id Int
   dish_id Int
   price Decimal
+  name String
 
   Dish Dishes @relation(fields: [dish_id], references: [id])
   Branch Branches @relation(fields: [branch_id], references: [id])
+
+  @@unique([dish_id, branch_id])
 }
 
 model Orders{
@@ -124,6 +127,7 @@ model Order_dish{
   quantity Int
   subtotal Decimal
   user_id Int
+  name String
   
   Order Orders @relation(fields: [order_id], references: [id])
 }

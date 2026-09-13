@@ -11,7 +11,6 @@ export class DishesService {
         }
         // obtiene todos los dishes de su branch
         const dishes = await dishesRepositoryWaitress(branch.branchId)
-
         const result = []
 
         for (const dish of dishes) {

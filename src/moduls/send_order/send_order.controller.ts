@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import type { SendOrderService } from "./send_order.service";
 import { orderSchema } from "./send_order.schema";
+import { getIO } from "../../helper/socket";
 
 export class SendOrderController {
     constructor(private service:SendOrderService){}
@@ -17,7 +18,8 @@ export class SendOrderController {
         }
 
          try {
-            await this.service.sendOrder(data.data, userId)
+            const result = await this.service.sendOrder(data.data, userId)
+            getIO().emit("new-order", result)
             return res.status(201).json({message: "", success:true})
         } catch (error) {
             return next(error)

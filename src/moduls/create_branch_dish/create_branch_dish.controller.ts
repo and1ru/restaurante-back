@@ -13,12 +13,12 @@ export class CreateBranchDishController {
         }
 
         if(!userId){
-            return res.status(401).json({message:"", success:false})
+            return res.status(400).json({message:"", success:false})
         }
 
         try {
-            const { id, price } = data.data
-            await this.service.createBranchDish(id, price, userId)
+            const { id, price, name } = data.data
+            await this.service.createBranchDish(id, price, userId, name)
             return res.status(201).json({message:"product in branch", success:true})
         } catch (error) {
             return next(error)
