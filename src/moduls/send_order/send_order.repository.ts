@@ -10,12 +10,12 @@ export const findBranchDish = async (dishId:number, branchId:number) => {
     })
 }
 
-export const createOrder = async (total:number, branchId:number) => {
-    return await prisma.orders.create({data:{status:"PENDDING", total, branch_id:branchId}})
+export const createOrder = async (total:number, branchId:number, userId:number) => {
+    return await prisma.orders.create({data:{status:"PENDDING", total, branch_id:branchId, user_id:userId}})
 }
 
-export const createDishOrder = async (quantity:number, subTotal:number, userId:number, orderId:number, dishId:number, name:string) => {
-    await prisma.order_dish.create({data:{quantity, subtotal:subTotal, user_id:userId, order_id:orderId, branch_dish_id:dishId, name}})
+export const createDishOrder = async (quantity:number, subTotal:number, orderId:number, dishId:number, name:string) => {
+    await prisma.order_dish.create({data:{quantity, subtotal:subTotal, order_id:orderId, branch_dish_id:dishId, name}})
 }
 
 export const finalOrderRepository = async (orderId:number) => {

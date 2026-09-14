@@ -19,7 +19,9 @@ enum Role{
 
 enum OderStatus{
   PENDDING
+  READY
   DONE
+  COOKING
 }
 
 model Restaurants{
@@ -115,6 +117,7 @@ model Orders{
   status OderStatus
   date DateTime @default(now())
   branch_id Int
+  user_id Int
 
   Branch Branches @relation(fields: [branch_id], references: [id])
   Order_dish Order_dish[]
@@ -126,7 +129,6 @@ model Order_dish{
   order_id Int
   quantity Int
   subtotal Decimal
-  user_id Int
   name String
   
   Order Orders @relation(fields: [order_id], references: [id])

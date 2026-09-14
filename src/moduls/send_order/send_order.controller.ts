@@ -19,7 +19,7 @@ export class SendOrderController {
 
          try {
             const result = await this.service.sendOrder(data.data, userId)
-            getIO().emit("new-order", result)
+            getIO().emit("new-order-chef", result)
             return res.status(201).json({message: "", success:true})
         } catch (error) {
             return next(error)

@@ -36,10 +36,10 @@ export class SendOrderService {
         const total = branchDishes.reduce((prev, curr) => prev + curr.subTotal, 0)
 
         // crear una order
-        const order = await createOrder(total, branch.branchId)
+        const order = await createOrder(total, branch.branchId, userId)
         // insertar en esa order cada dish y quantity
         for (const dish of branchDishes) {
-            await createDishOrder(dish.quantity, dish.subTotal, userId, order.id, branch.branchId, dish.name)
+            await createDishOrder(dish.quantity, dish.subTotal, order.id, branch.branchId, dish.name)
         }
 
         const finalOrder = await finalOrderRepository(order.id)
