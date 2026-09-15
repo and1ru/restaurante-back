@@ -59,8 +59,31 @@ model Branches{
   Orders Orders[]
   branch_dishes Branch_dishes[]
   Employees Employees[]
+  Tables Tables[]
+  Reservations Reservations[]
+  Schedule Schedule?
 
   Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
+}
+
+model Tables {
+  id Int @id @default(autoincrement())
+  capacity Int
+  branch_id Int
+
+  Reservations Reservations[]
+
+  Banch Branches @relation(fields: [branch_id], references: [id])
+}
+
+model Schedule {
+  id           Int @id @default(autoincrement())
+  branch_id    Int @unique
+  opening_time String
+  closing_time String
+  interval     Int
+
+  branch Branches @relation(fields: [branch_id], references: [id])
 }
 
 model Employees {
@@ -132,4 +155,18 @@ model Order_dish{
   name String
   
   Order Orders @relation(fields: [order_id], references: [id])
+}
+
+model Reservations {
+  id Int @id @default (autoincrement())
+  branch_id Int
+  table_id Int
+  name String
+  phone String
+  people Int
+  date DateTime
+  status String
+
+  Table Tables @relation(fields: [table_id], references: [id])
+  Branch Branches @relation(fields: [branch_id], references: [id])
 }

@@ -38,14 +38,17 @@ export const updateOrder = (io:Server) => {
 
             socket.emit("order-updated",{orderId, newState})
 
+            // esta parte es para agregar el pedido al orders del waitress
             if(newState === "READY"){
-                console.log("its ready")
                 const order = await newOrder(data.id)
                 if(!order){
                     throw new CustomError(404, "no order")
                 }
-                console.log("llego hasta aqui")
                 io.to(`branch-${branch.branchId}`).emit("new-order-waitress", order)
+            }
+
+            if(newState === "DONE"){
+                socket.emit("order-waitress-updated",{orderId, newState})
             }
         })
     })
