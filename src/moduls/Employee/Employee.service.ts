@@ -1,23 +1,20 @@
-import { CustomError } from "../../helper/cutomError"
 import type { role, roleFilter } from "../../types/role"
-import { employeeFilter, findBranch } from "./Employee.repository"
+import { employeeFilter } from "./Employee.repository"
 
 
 export class EmployeesService{
-    employees = async (restaurantId:number, userRole:string, userId:number, name:string, branchId:string, role:roleFilter) => {
+    employees = async (restaurantId:number, userRole:string, authenticatedBranchId:number | null | undefined, name:string, branchId:string, role:roleFilter) => {
         // puede venir todo vario branchId=0 role=""
         if(userRole === "OWNER"){
-            const result = await employeeFilter(Number(branchId),role, name)
+            const result = await employeeFilter(Number(branchId), role, name, restaurantId)
             return result
         }
 
         if(userRole === "ADMIN"){
-            const branch = await findBranch(userId)
-            if(!branch){
-                throw new CustomError(404, "not found branch")
+            if (authenticatedBranchId === null || authenticatedBranchId === undefined) {
+                throw new Error("A branch assignment is required")
             }
-
-            const result = await employeeFilter(branch.branchId, role, name)
+            const result = await employeeFilter(authenticatedBranchId, role, name, restaurantId)
             return result
         }
 

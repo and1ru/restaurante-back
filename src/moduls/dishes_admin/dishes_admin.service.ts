@@ -1,18 +1,8 @@
-import { CustomError } from "../../helper/cutomError"
-import { findBranch } from "../Employee/Employee.repository"
 import { dishesRepositoryAdmin } from "./dishes_admin.repository"
 
 export class DishesService {
-    dishes = async (userId: number) => {
-        // obtiene el branch
-        const branch = await findBranch(userId)
-        // si no encuentra el branch entonces lanza un error
-        if (!branch) {
-            throw new CustomError(404, "no found branch")
-        }
-
-        // obtiene los dishes de la branch
-        const dishes = await dishesRepositoryAdmin(branch.branchId)
+    dishes = async (branchId: number) => {
+        const dishes = await dishesRepositoryAdmin(branchId)
 
         let result = []
 

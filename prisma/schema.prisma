@@ -53,6 +53,9 @@ model Users {
   Branch     Branches?   @relation(fields: [branch_id], references: [id])
   Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
   Orders     Orders[]
+
+  @@index([restaurant_id])
+  @@index([branch_id])
 }
 
 model Branches {
@@ -71,6 +74,9 @@ model Branches {
   Schedule      Schedule?
 
   Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
+
+  @@index([restaurant_id])
+
 }
 
 model Tables {

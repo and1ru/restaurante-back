@@ -2,8 +2,9 @@ import { prisma } from "../../../lib/prisma"
 
 type orderStatus = "READY" | "DONE" | "PENDDING" | "COOKING"
 
-export const updateOrderRepository = async (orderId: number, newStatus: orderStatus) => {
-    await prisma.orders.update({ where: { id: orderId }, data: { status: newStatus } })
+export const updateOrderRepository = async (orderId: number, branchId: number, newStatus: orderStatus) => {
+    const result = await prisma.orders.updateMany({ where: { id: orderId, branch_id: branchId }, data: { status: newStatus } })
+    return result.count > 0
 }
 
 export const newOrder = async (orderId: number) => {
@@ -21,6 +22,3 @@ export const newOrder = async (orderId: number) => {
     })
 }
 
-export const findBranch = async (userId:number) => {
-    return await prisma.employees.findUnique({where:{userId}})
-}

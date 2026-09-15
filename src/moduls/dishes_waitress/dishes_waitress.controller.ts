@@ -4,14 +4,14 @@ import type { DishesService } from "./dishes_waitress.service";
 export class DishesController {
   constructor(private service: DishesService) {}
   dishes = async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.user?.userId;
+    const branchId = req.user?.branchId;
 
-    if (!userId) {
+    if (branchId === null || branchId === undefined) {
       return res.status(401).json({ message: "", success: false });
     }
 
     try {
-      const result = await this.service.dishes(userId);
+      const result = await this.service.dishes(branchId);
       return res.status(200).json({ message: "got dishes", success: true, result });
     } catch (error) {
       return next(error);

@@ -1,20 +1,14 @@
 import { CustomError } from "../../helper/cutomError";
-import { findBranchDish, findBranch, createOrder, createDishOrder, finalOrderRepository } from "./send_order.repository";
+import { findBranchDish, createOrder, createDishOrder, finalOrderRepository } from "./send_order.repository";
 import type { dishType } from "./send_order.schema";
 
 export class SendOrderService {
-    sendOrder = async (dishes:dishType[], userId:number) => {
+    sendOrder = async (dishes:dishType[], userId:number, branchId:number) => {
         const branchDishes = []
-
-        // obtener la branch
-        const branch = await findBranch(userId)
-        if(!branch){
-            throw new CustomError(404, "no branch")
-        }
 
         // obtener los precios y nade de branch_dishes
         for (const dish of dishes) {
-            const branchDish = await findBranchDish(dish.id, branch.branchId)
+            const branchDish = await findBranchDish(dish.id, branchId)
             if(!branchDish){
                 throw new CustomError(400, "no se pudo encontrar el dish")
             }
@@ -36,10 +30,10 @@ export class SendOrderService {
         const total = branchDishes.reduce((prev, curr) => prev + curr.subTotal, 0)
 
         // crear una order
-        const order = await createOrder(total, branch.branchId, userId)
+        const order = await createOrder(total, branchId, userId)
         // insertar en esa order cada dish y quantity
         for (const dish of branchDishes) {
-            await createDishOrder(dish.quantity, dish.subTotal, order.id, branch.branchId, dish.name)
+            await createDishOrder(dish.quantity, dish.subTotal, order.id, dish.branchId, dish.name)
         }
 
         const finalOrder = await finalOrderRepository(order.id)

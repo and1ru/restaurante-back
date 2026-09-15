@@ -1,5 +1,5 @@
 import { Server } from 'socket.io'
-import { findBranch, OrdersRepository } from './get_orders_waitress.repository'
+import { OrdersRepository } from './get_orders_waitress.repository'
 import { CustomError } from '../../helper/cutomError'
 
 export const OrdersWaitress = (io: Server) => {

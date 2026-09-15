@@ -1,9 +1,5 @@
 import { prisma } from "../../../lib/prisma"
 
-export const findBranch = async (userId:number) => {
-    return await prisma.employees.findUnique({where:{userId}, select:{branchId:true}})
-}
-
 export const findBranchDish = async (dishId:number, branchId:number) => {
     return await prisma.branch_dishes.findFirst({
         where:{branch_id:branchId, id:dishId }
@@ -11,7 +7,7 @@ export const findBranchDish = async (dishId:number, branchId:number) => {
 }
 
 export const createOrder = async (total:number, branchId:number, userId:number) => {
-    return await prisma.orders.create({data:{status:"PENDDING", total, branch_id:branchId, user_id:userId}})
+    return await prisma.orders.create({data:{status:"PENDING", total, branch_id:branchId, user_id:userId}})
 }
 
 export const createDishOrder = async (quantity:number, subTotal:number, orderId:number, dishId:number, name:string) => {

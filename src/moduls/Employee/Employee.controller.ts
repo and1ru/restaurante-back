@@ -7,11 +7,11 @@ export class EmployeeController {
     employee = async (req:Request, res:Response, next:NextFunction) => {
         const { branch, name, role } = req.query
         const userRole = req.user?.role
-        const userId = req.user?.userId
+        const branchId = req.user?.branchId
         const restaurantId = req.user?.restaurantId
 
-        if(!userId || !userRole || !restaurantId){
-            return res.status(401)
+        if (!userRole || restaurantId === undefined) {
+            return res.status(401).json({ message: "unauthenticated", success: false })
         }
 
         if(typeof name !== "string" || typeof branch !== "string"){
@@ -19,7 +19,7 @@ export class EmployeeController {
         }
 
         try {
-            const result = await this.service.employees(restaurantId,userRole, userId, name, branch, role as roleFilter)
+            const result = await this.service.employees(restaurantId, userRole, branchId, name, branch, role as roleFilter)
             return res.status(200).json({message:"got employees", success:true, result})
         } catch (error) {
             return next(error)

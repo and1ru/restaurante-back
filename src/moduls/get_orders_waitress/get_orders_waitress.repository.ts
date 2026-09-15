@@ -1,10 +1,5 @@
 import { prisma } from "../../../lib/prisma"
 
-export const findBranch = (userId: number) => {
-    return prisma.employees.findUnique({ where: { userId } })
-}
-
-
 export const OrdersRepository = async (userId: number) => {
     return await prisma.orders.findMany({
         where: { status: "READY", user_id:userId },
