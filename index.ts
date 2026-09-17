@@ -23,3 +23,10 @@ app.use(errorMiddleware)
 httpServer.listen(3000, () => {
     console.log("escuchando en el puerto 3000")
 })
+
+
+// login.controller -> mejorar la forma en la que se esta guardando el token
+// login.route -> agregar middleware de rate limit
+// el custom erro debe capturar errores de prisma
+// create_dish.service -> eliminar la imagen en caso de que no se pueda crear el dish
+// revisar get_dishes_admin - get_dishes_owner - get_dishes_waitress

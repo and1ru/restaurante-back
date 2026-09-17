@@ -114,6 +114,8 @@ model Categories {
 
   Dishes     Dishes[]
   Restaurant Restaurants @relation(fields: [restaurant_id], references: [id])
+
+  @@unique([restaurant_id, name])
 }
 
 model Dishes {
@@ -135,6 +137,8 @@ model Branch_dishes {
   dish_id   Int
   price     Decimal
   name      String
+  description String
+  ingredients String
 
   Dish       Dishes       @relation(fields: [dish_id], references: [id])
   Branch     Branches     @relation(fields: [branch_id], references: [id])

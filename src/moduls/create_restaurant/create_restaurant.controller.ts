@@ -6,6 +6,7 @@ export class CreateRestaurantController{
     constructor(private service:CreateRestaurantService){}
     createRestaurant = async (req:Request, res:Response, next:NextFunction) => {
         const data = createRestaurantSchema.safeParse(req.body)
+
         if(!data.success){
             return next(data.error)
         }
@@ -15,8 +16,7 @@ export class CreateRestaurantController{
             await this.service.createRestaurant(ownerName, nameRestaurant, email, password)
             return res.status(201).json({message:"user and restaurant have been created", success:true})
         } catch (error) {
-            console.error(error)
-            next(error)
+            return next(error)
         }
     }
 }

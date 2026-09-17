@@ -5,8 +5,10 @@ export const OrdersRepository = async (branchId:number) => {
     return await prisma.orders.findMany({
         // solo las orders de la branch
         where:{ branch_id:branchId, status:{ in:["PENDING", "COOKING"]} },
-        include:{
-            // cada order puede tener varios order dishes
+        select:{
+            id:true,
+            status:true,
+            date:true,
             Order_dish:{
                 select:{
                     id:true,
@@ -14,6 +16,9 @@ export const OrdersRepository = async (branchId:number) => {
                     name:true
                 }
             }
+        },
+        orderBy:{
+            date: "asc"
         }
     })
 }

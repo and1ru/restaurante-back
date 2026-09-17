@@ -6,21 +6,18 @@ export class CreateBranchController {
     constructor(private service:CreateBranchService){}
     createBranch = async (req:Request, res:Response, next:NextFunction) => {
         const data = createBranchSchema.safeParse(req.body)
-        const restaurantId = req.user?.restaurantId
+        const { restaurantId } = req.user!
+
         if(!data.success){
             return next(data.error)
         }
 
-        if(!restaurantId){
-            return res.status(401).json({message:"", success:false})
-        }
-
         try {
-            const { address, city, country, table, name } = data.data
-            await this.service.createBranch(name, address, city, country, Number(table), restaurantId)
+            const { address, city, country, name } = data.data
+            await this.service.createBranch(name, address, city, country, restaurantId)
             return res.status(201).json({message:"branch created", success:true})
         } catch (error) {
-            console.error(error)
+            return next(error)
         }
     }
 }
