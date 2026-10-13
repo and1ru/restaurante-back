@@ -6,7 +6,7 @@ import { envs } from '../helper/envs'
 export const authToken = (req:Request, res:Response, next:NextFunction) => {
     const token = req.cookies.token
     if(!token){
-        return res.status(400).json({message:"no token", success:false})
+        return res.status(401).json({message:"no token", success:false})
     }
     
     try {
@@ -16,6 +16,6 @@ export const authToken = (req:Request, res:Response, next:NextFunction) => {
 
         next()
     } catch (error) {
-        return res.status(400).json({message:"token no valido"})
+        return res.status(401).json({message:"token no valido"})
     }
 }

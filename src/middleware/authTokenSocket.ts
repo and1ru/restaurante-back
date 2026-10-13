@@ -18,10 +18,7 @@ export const AuthTokenSocket = (io: Server) => {
     }
 
     try {
-      const payload = jwt.verify(
-        token,
-        envs.jwt_secret
-      ) as Payload;
+      const payload = jwt.verify(token,envs.jwt_secret) as Payload;
 
       socket.data.user = payload;
 
