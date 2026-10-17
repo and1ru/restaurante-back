@@ -3,7 +3,7 @@ import { uploadImage } from "../../helper/uploadImage"
 import { findCategoryByRestaurant, createDishRepository } from "./create_dish.repository"
 
 export class CreateDishService {
-    createDish = async ( image:Express.Multer.File, categoryId:number, name:string, restaurantId:number ) => {
+    createDish = async ( image:Express.Multer.File, categoryId:number, name:string, restaurantId:number, description:string ) => {
         // verificar que la categoria pertenezca a la company
         const existCategoryRestaurant = await findCategoryByRestaurant(categoryId, restaurantId)
         if(!existCategoryRestaurant){
@@ -12,8 +12,7 @@ export class CreateDishService {
 
         const generateImage = await uploadImage(image.buffer)
         const { secure_url, public_id } = generateImage
-        const response = await createDishRepository(public_id, secure_url, name, categoryId, restaurantId)
+        await createDishRepository(public_id, secure_url, name, categoryId, restaurantId, description )
         // si no se puede crear el dish entonces se tiene que eliminar la imagen de claudinary
-
     }
 }

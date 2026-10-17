@@ -125,6 +125,7 @@ model Dishes {
   image_id       String
   category_id    Int
   restaurant_id  Int
+  description String
 
   Branch_Dishes Branch_dishes[]
   Category      Categories      @relation(fields: [category_id], references: [id])
@@ -137,8 +138,6 @@ model Branch_dishes {
   dish_id   Int
   price     Decimal
   name      String
-  description String
-  ingredients String
 
   Dish       Dishes       @relation(fields: [dish_id], references: [id])
   Branch     Branches     @relation(fields: [branch_id], references: [id])

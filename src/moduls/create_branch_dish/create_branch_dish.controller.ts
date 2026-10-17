@@ -7,9 +7,12 @@ export class CreateBranchDishController {
     constructor(private service:CreateBranchDishService){}
     createBranchDish = async (req:Request, res:Response, next:NextFunction) => {
         const data = createBranchDishSchema.safeParse(req.body)
-        const { branchId, restaurantId } = req.user!
+        const { branchId, restaurantId } = req.user
 
         if(!data.success){
+            console.log("entro aqui")
+            console.log(data.data)
+            console.log(data.error.flatten())
             return next(data.error)
         }
 
@@ -18,8 +21,8 @@ export class CreateBranchDishController {
         }
 
         try {
-            const { dishId, price, dishName, description, ingredients } = data.data
-            await this.service.createBranchDish(dishId, price, branchId, dishName, restaurantId, description, ingredients )
+            const { dishId, price } = data.data
+            await this.service.createBranchDish(dishId, price, branchId, restaurantId)
             return res.status(201).json({message:"product in branch", success:true})
         } catch (error) {
             return next(error)
