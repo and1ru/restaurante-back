@@ -5,13 +5,11 @@ import { CreateRestaurantRepository } from "./create_restaurant.repository"
 
 export class CreateRestaurantService{
     createRestaurant = async (ownerName:string, nameRestaurant:string, email:string, password:string) => {
-        // verificar que no haya usuarios con el email
         const user = await findUserByEmail(email)
-        if(!user){
+        if(user){
             throw new CustomError(409, "email already used")
         }
         
-        // hash password
         const hashedPassword = await hashPassword(password)
 
         await CreateRestaurantRepository(ownerName, nameRestaurant, email, hashedPassword)

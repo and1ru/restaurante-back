@@ -1,16 +1,21 @@
 import { prisma } from "../../../lib/prisma"
 import type { roleFilter } from "../../types/role"
 
-export const employeeFilter = async (restaurantId: number, branchId?: number, role?: roleFilter, name?: string) => {
+export const employeeFilter = async (restaurantId: number, branchId: number, role: roleFilter | undefined, name: string | undefined, myId:number) => {
+
   return await prisma.users.findMany({
     where: {
+      id: {
+        not: myId
+      },
+      
       restaurant_id: restaurantId,
       // obtendra los usuarios de la branch
-      ...(branchId !== undefined && { branch_id: branchId }),
+      ...(branchId !== 0  && { branch_id: branchId }),
       // obtendra los usuarios segun su role
-      ...(role !== undefined && { role }),
+      ...(role !== "" && { role }),
       // obtendra los usuarios que contenga name en su nombre
-      ...(name !== undefined && { name: { contains: name } }),
+      ...(name !== "" && { name: { contains: name } }),
     },
     select: {
       id: true,
@@ -18,7 +23,8 @@ export const employeeFilter = async (restaurantId: number, branchId?: number, ro
       role: true,
       Branch: {
         select: {
-          name: true
+          name: true,
+          id: true
         }
       }
     }

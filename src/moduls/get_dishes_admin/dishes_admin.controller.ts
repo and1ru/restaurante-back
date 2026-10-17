@@ -5,7 +5,7 @@ import { CustomError } from "../../helper/cutomError";
 export class DishesController {
   constructor(private service: DishesService) {}
   dishes = async (req: Request, res: Response, next: NextFunction) => {
-    const { branchId, restaurantId } = req.user!;
+    const { branchId, restaurantId } = req.user;
 
     if (!branchId) {
       throw new CustomError(400, "A branch assignment is required")
